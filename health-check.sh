@@ -1,3 +1,4 @@
+STATUS=0
 LOG_FILE="$HOME/devops/day6/server-health/health.log"
 echo "Health check started $(date)" > "$LOG_FILE"
 check_port(){
@@ -6,6 +7,7 @@ check_port(){
 		echo "Port 22: LISTENING"
 	else
 		echo "Port 22: NOT LISTENING"
+		STATUS=1
 	fi
 }
 check_disk(){
@@ -24,6 +26,7 @@ check_ssh(){
 		echo "SSH: OK"
 	else
 		echo "SSH: FAILED"
+		STATUS=1
 	fi
 }
 echo "Hostname $(hostname)"
@@ -34,3 +37,4 @@ check_memory
 check_ssh
 check_port
 echo "Health Check Completed $(date)" >> "$LOG_FILE"
+exit $STATUS
